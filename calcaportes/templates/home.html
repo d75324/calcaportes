@@ -28,7 +28,14 @@
             Guardar y Calcular</button>
 
     </form>
+    {% if registro_empleado_creado %}
 
+        <div class="alert alert-success" role="alert">
+            Empleado <strong>{{ registro_empleado_creado.nombre_empleado }}</strong> creado con éxito!
+            El aporte de {{ registro_empleado_creado.nombre_empleado }} y sus {{ registro_empleado_creado.cantidad_de_hijos }} hijes es:
+            <strong>$ {{ registro_empleado_creado.calcular_aportes }}</strong>
+        </div>
+    {% endif %}
 
 
 </div>
