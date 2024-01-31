@@ -4,4 +4,9 @@
 
 <div class="container"><h2>Histórico</h2></div>
 
+<ul>
+    {% for empleado_for in empleados %}
+    <li><a href="/empleado/{{ empleado_for.id}}/">{{ empleado_for.nombre_empleado }} - {{ empleado_for.calcular_aportes }}</a></li>
+    {% endfor %}
+</ul>
 {% endblock %}

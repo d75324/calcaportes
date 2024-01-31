@@ -24,7 +24,10 @@ def empleado(request, id):
     return render(request, 'empleado.html', context)
 
 def historico(request):
-    return render(request, 'historico.html')
+    context = {}
+    empleados = CalculoAportes.objects.all()
+    context['empleados'] = empleados
+    return render(request, 'historico.html', context)
 
 def registro(request):
     return render(request, 'registro.html')
