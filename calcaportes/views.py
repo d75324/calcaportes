@@ -18,6 +18,11 @@ def home(request):
     return render(request, 'home.html', context)
 
 
+def empleado(request, id):
+    empleado = CalculoAportes.objects.get(id=id)
+    context = {'empleado': empleado}
+    return render(request, 'empleado.html', context)
+
 def historico(request):
     return render(request, 'historico.html')
 

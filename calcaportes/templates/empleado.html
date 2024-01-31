@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container"><h2>Empleado {{ empleado.nombre_empleado }}</h2></div>
+El aporte de {{ empleado.nombre_empleado }} es de {{ empleado.calcular_aportes }}<br>
+{% endblock %}
