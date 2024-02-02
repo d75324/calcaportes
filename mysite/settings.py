@@ -111,9 +111,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+'''
 COMISIONES_AFAP = {
     'INTEGRA' : 1.12,
     'SURACAP' : 1.114,
     'UNIONCP' : 1.12,
     'REPUBLI' : 1.114,
 }
+'''
