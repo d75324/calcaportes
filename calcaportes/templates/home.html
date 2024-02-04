@@ -22,13 +22,17 @@
 
         {{ form }}
 
+        <br>
+
         <button type="submit" class="btn btn-primary">
             Guardar e ingresar otro empleado</button>
         <button type="submit" class="btn btn-primary">
             Guardar y Calcular</button>
 
     </form>
+    <br>
     {% if registro_empleado_creado %}
+    <hr>
 
         <div class="alert alert-success" role="alert">
             Empleado <strong>{{ registro_empleado_creado.nombre_empleado }}</strong> creado con éxito!

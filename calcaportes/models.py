@@ -2,14 +2,12 @@ from django.db import models
 
 # Create your models here.
 
-
 COMISIONES_AFAP = {
     'INTEGRA': 1.12,
     'SURACAP': 1.114,
     'UNIONCP': 1.12,
     'REPUBLI': 1.114,
 }
-
 
 class CalculoAportes(models.Model):
 
@@ -31,7 +29,8 @@ class CalculoAportes(models.Model):
     fecha_ingreso = models.DateTimeField()
     cantidad_de_hijos = models.IntegerField()
 
-    # ahora, los cálculos
+    class Meta:
+        app_label = 'calcaportes'
 
     def __str__(self):
         return (f'{self.nombre_empleado}')
@@ -44,56 +43,31 @@ class CalculoAportes(models.Model):
         base_imponible = self.base_imponible1()
         aportes_totales = bonifica + asigna + pago_fonasa + pago_afp + base_imponible
         return aportes_totales
-
+    
     def bonifica1(self):
-        # uso acá 15 meses como ejemplo pero lo tengo que calcular
+        # uso acá 15 meses como ejemplo pero ## LO TENGO QUE CALCULAR ##
         cantidad_meses_trabajados = 15
-        factor0_bonifica1 = float(1+(cantidad_meses_trabajados/100))
-        if self.salario_base is not None:
-            self.salario_base = int(self.salario_base)
-            return self.salario_base * factor0_bonifica1
-        else:
-            return 0  # salario_base no debería ser None, está definido como IntegerField
+        factor = float(1+(cantidad_meses_trabajados/100))
+        return self.salario_base * factor
 
     def asigna1(self):
         factor_asignacion = 1.05
-        if self.salario_base is not None:
-            total_asignacion = self.salario_base * factor_asignacion * self.cantidad_de_hijos
-            return total_asignacion
-        else:
-            return 0  # IDEM salario_base no debería ser None, está definido como IntegerField
+        total_asignacion = self.salario_base * factor_asignacion * self.cantidad_de_hijos
+        return total_asignacion
 
     def pago_fonasa1(self):
-        # no se como tomar los valores desde COMISIONES_AFAP
-        # uso cualquier valor para el ejemplo
-        if self.salario_base is not None:
-            total_pago_fonasa = self.salario_base * 1.114
-            return total_pago_fonasa
-        else:
-            return 0
+        total_pago_fonasa = self.salario_base * 1.114
+        return total_pago_fonasa
 
     def pago_afap1(self):
-        # IDEM anterior, no se como tomar los valores desde COMISIONES_AFAP
         comision_afap = COMISIONES_AFAP[self.afap]
         return self.salario_base * comision_afap
 
     def base_imponible1(self):
-        return self.salario_base * 0.8
-
-
-# bonifica = CalculoAportes()
-# bonifica.bonifica1()
-
-# asigna = CalculoAportes()
-# bonifica.asigna1()
-
-# pago_fonasa = CalculoAportes()
-# bonifica.pago_fonasa1()
-
-#pago_afap = CalculoAportes()
-#bonifica.pago_afap1()
+        return self.salario_base
 
 # '''
+# # ESTAS SON LAS COSAS QUE TENGO QUE CALCULAR # #
 # bonifica
 # asigna
 # pago_fonasa
