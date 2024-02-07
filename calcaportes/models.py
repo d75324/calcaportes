@@ -1,12 +1,13 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
 COMISIONES_AFAP = {
-    'INTEGRA': 1.12,
-    'SURACAP': 1.114,
-    'UNIONCP': 1.12,
-    'REPUBLI': 1.114,
+    'INTEGRA': 0.12,
+    'SURACAP': 0.114,
+    'UNIONCP': 0.12,
+    'REPUBLI': 0.114,
 }
 
 class CalculoAportes(models.Model):
@@ -18,6 +19,7 @@ class CalculoAportes(models.Model):
         ('REPUBLI', 'República AFAP'),
     ]
 
+    fecha_con_zona_horaria = timezone.now()
     created_at = models.DateTimeField(auto_now_add=True)
     user_name = models.CharField(max_length=50)
     user_email = models.EmailField()
@@ -46,55 +48,37 @@ class CalculoAportes(models.Model):
     
     def bonifica1(self):
         # uso acá 15 meses como ejemplo pero ## LO TENGO QUE CALCULAR ##
+        # Una bonificación del 1% del sueldo base, por cada mes trabajado
         cantidad_meses_trabajados = 15
-        factor = float(1+(cantidad_meses_trabajados/100))
-        return self.salario_base * factor
+        uno_porciento_del_salario_base = (self.salario_base)/100
+        calculo_bonificacion = cantidad_meses_trabajados * uno_porciento_del_salario_base
+        return calculo_bonificacion
 
     def asigna1(self):
-        factor_asignacion = 1.05
-        total_asignacion = self.salario_base * factor_asignacion * self.cantidad_de_hijos
+        factor_asignacion = 0.05
+        total_asignacion = (self.salario_base * factor_asignacion) * self.cantidad_de_hijos
         return total_asignacion
 
     def pago_fonasa1(self):
-        total_pago_fonasa = self.salario_base * 1.114
-        return total_pago_fonasa
+        pago_fonasa = self.salario_base * 0.07
+        return pago_fonasa
 
     def pago_afap1(self):
         comision_afap = COMISIONES_AFAP[self.afap]
         return self.salario_base * comision_afap
 
     def base_imponible1(self):
-        return self.salario_base
+        a = self.bonifica1()
+        b = self.asigna1()
+        base_impo = self.salario_base + a + b
+        return base_impo
+
 
 # '''
-# # ESTAS SON LAS COSAS QUE TENGO QUE CALCULAR # #
+## ESTAS SON LAS COSAS QUE TENGO QUE CALCULAR ##
 # bonifica
 # asigna
+# base_imponible
 # pago_fonasa
 # pago_afp
-# base_imponible
 # '''
-
-# ca1 = CalculoAportes(
-#     user_name='juan',
-#     user_email='juan@example.com',
-#     nombre_empleado='juan',
-#     apellido_empleado='perez',
-#     salario_base=1000,
-#     afap='INTEGRA',
-#     fecha_ingreso='2020-01-01T00:00:00Z',
-#     cantidad_de_hijos=2
-# )
-# ca1.save()
-
-# ca2 = CalculoAportes(
-#     user_name='juan2',
-#     user_email='juan2@example.com',
-#     nombre_empleado='juan2',
-#     apellido_empleado='perez',
-#     salario_base=1000,
-#     afap='SURACAP',
-#     fecha_ingreso='2020-01-01T00:00:00Z',
-#     cantidad_de_hijos=3
-# )
-# ca2.save()
