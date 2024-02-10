@@ -1,7 +1,6 @@
 from django import forms
 from .models import CalculoAportes
 
-
 class RegistroEmpleado(forms.ModelForm):
     class Meta:
         model = CalculoAportes
@@ -13,3 +12,4 @@ class RegistroEmpleado(forms.ModelForm):
             "fecha_ingreso",
             "cantidad_de_hijos"
         ]
+

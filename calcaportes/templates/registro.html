@@ -2,6 +2,27 @@
 
 {% block content %}
 
-<div class="container"><h2>Registro</h2></div>
+<div class="container"><h4>Registrese aquí</h4> 
+<p>para poder acceder a sus registros históricos</p>
+</div>
+
+<div class="col-md-6 offset-md-3">
+    <h1>Formulario de Registro</h1>
+    <form method="post" action="{% url 'registro' %}"> 
+        {% csrf_token %}
+
+        <form>
+            <div class="mb-3">                
+                <input type="text" class="form-control" name="user_name", placeholder="Ingrese un nombre de Usuario" required>
+                <div id="emailHelp" class="form-text">Su nombre de pila o el pseudónimo que prefiera</div>
+              </div>
+            <div class="mb-3">              
+              <input type="password" class="form-control" name="user_pass", placeholder="Una password mas..." required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+    </form>
+</div>
 
 {% endblock %}

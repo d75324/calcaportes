@@ -4,44 +4,49 @@
 
 <div class="container"><h2>Home</h2>
 
-    {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-            El formulario contiene errores, por favor revisar.
-        </div>
-    {% endif %}
+    {% if user.is_authenticated %}
 
-    <h1>Ingrese la información de los empleados</h1>
-
-    <form action="" method="POST">
-        {% csrf_token %}
-        {% if message %}
-            <div class="alert alert-success" role="alert">
-                Formulario completo!
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                El formulario contiene errores, por favor revisar.
             </div>
         {% endif %}
 
-        {{ form }}
+        <h1>Ingrese la información de los empleados</h1>
 
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% if message %}
+                <div class="alert alert-success" role="alert">
+                    Formulario completo!
+                </div>
+            {% endif %}
+
+            {{ form }}
+
+            <br>
+
+            <button type="submit" class="btn btn-primary">
+                Guardar e ingresar otro empleado</button>
+            <button type="submit" class="btn btn-primary">
+                Registrese para Calcular Pagos</button>
+
+        </form>
         <br>
+        {% if registro_empleado_creado %}
+        <hr>
 
-        <button type="submit" class="btn btn-primary">
-            Guardar e ingresar otro empleado</button>
-        <button type="submit" class="btn btn-primary">
-            Guardar y Calcular</button>
+            <div class="alert alert-success" role="alert">
+                Empleado <strong>{{ registro_empleado_creado.nombre_empleado }}</strong> creado con éxito!
+                El aporte de {{ registro_empleado_creado.nombre_empleado }} y sus {{ registro_empleado_creado.cantidad_de_hijos }} hijes es:
+                <strong>$ {{ registro_empleado_creado.calcular_aportes }}</strong>
+            </div>
+        {% endif %}
 
-    </form>
-    <br>
-    {% if registro_empleado_creado %}
-    <hr>
-
-        <div class="alert alert-success" role="alert">
-            Empleado <strong>{{ registro_empleado_creado.nombre_empleado }}</strong> creado con éxito!
-            El aporte de {{ registro_empleado_creado.nombre_empleado }} y sus {{ registro_empleado_creado.cantidad_de_hijos }} hijes es:
-            <strong>$ {{ registro_empleado_creado.calcular_aportes }}</strong>
-        </div>
     {% endif %}
 
-
 </div>
+
+<div class="container"><hr></div>
 
 {% endblock %}

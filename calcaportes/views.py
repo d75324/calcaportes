@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import CalculoAportes
 from .forms import RegistroEmpleado
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 def home(request):
@@ -30,4 +32,27 @@ def historico(request):
     return render(request, 'historico.html', context)
 
 def registro(request):
-    return render(request, 'registro.html')
+    if request.method == "POST":
+        # let's do a form:
+        username = request.POST['user_name']
+        password = request.POST['user_pass']
+        # authenticate
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "El registro se procesó correctamente")
+            return redirect('home')
+        else:
+            messages.success(request, "Por favor revisar los datos ingresados")
+            return redirect('registro')
+        
+    else:
+        return render(request, 'registro.html')
+
+def login_user():
+    pass
+
+def logout_user(request):
+    logout(request)
+    messages.success('Salida Exitosa')
+    return render(request, 'home.html')
