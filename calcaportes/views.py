@@ -19,7 +19,6 @@ def home(request):
     context['form'] = form_registro_empleado
     return render(request, 'home.html', context)
 
-
 def empleado(request, id):
     empleado = CalculoAportes.objects.get(id=id)
     context = {'empleado': empleado}
@@ -54,5 +53,5 @@ def login_user():
 
 def logout_user(request):
     logout(request)
-    messages.success('Salida Exitosa')
-    return render(request, 'home.html')
+    messages.success(request, 'Salida Exitosa')
+    return redirect('registro')

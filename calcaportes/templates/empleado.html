@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container"><h2>Empleado {{ empleado.nombre_empleado }}</h2></div>
-El aporte de {{ empleado.nombre_empleado }} es de {{ empleado.calcular_aportes }}<br>
+<div class="container"><h2>Calculo de Aportes para {{ empleado.nombre_empleado }}</h2>
+Según los datos ingresados, <strong>{{ empleado.nombre_empleado }}</strong> ingresó a la empresa el <strong>{{ empleado.fecha_ingreso }}</strong> <br>
+En función de ese dato, le corresponde una bonificación de <strong>{{ empleado.bonifica1 }}</strong> pesos.<br>
+En concepto de Asingación Familiar, le corresponde <strong>{{ empleado.asigna1 }}</strong> pesos. <br>
+En base a lo anterior, la base imponible corresponde a <strong>{{ empleado.base_imponible1 }}</strong> pesos. <br>
+<hr>
+Deberá aportar a FONASA: <strong>{{ empleado.pago_fonasa1 }}</strong> pesos. <br>
+Mientras que el aporte a AFAP es: <strong>{{ empleado.pago_afap1 }}</strong> pesos. <br>
+<hr>
+<a href="{% url 'home' %}" class="btn btn-outline-primary">Calcular Aportes para Otro Empleado</a>
+</div>
 {% endblock %}

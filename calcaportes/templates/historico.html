@@ -4,9 +4,55 @@
 
 <div class="container"><h2>Histórico</h2></div>
 
-<ul>
-    {% for empleado_for in empleados %}
-    <li><a href="/empleado/{{ empleado_for.id}}/">{{ empleado_for.nombre_empleado }} - {{ empleado_for.calcular_aportes }}</a></li>
-    {% endfor %}
-</ul>
+<div class="container">
+  <h3>Método de Cálculo de los Valores</h3>
+  <p>Los valores se calcularon de la siguiente forma:</p>
+  <ul>
+    <li><strong>Salario Base</strong>: Es un dato aportado</li>
+    <li><strong>Bonificación</strong>: Se calcula en base al 1% del Salario Base por mes trabajado</li>
+    <li><strong>Asignación</strong>: Es el 5% del salario por cada hijo menor de edad</li>
+    <li><strong>Base Imponble</strong>: Es la suma del Salario Base, la Bonificación y la Asignación</li>
+    <li><strong>Pago a AFAP</strong>: Es el monto que se debe aportar a la AFAP</li>
+    <li><strong>Pago a FONASA</strong>: Es el monto que se debe aportar al Fondo Nacional de Salúd</li>
+  </ul>
+</div>
+
+{% if user.is_authenticated %}
+
+<div class="container">
+<table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Salario Base</th>
+        <th>Bonificación</th>
+        <th>Asignación</th>
+        <th>Base Imponible</th>
+        <th>Pago AFAP</th>
+        <th>Fonasa</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for empleado_for in empleados %}
+        <tr>
+          <td><a href="/empleado/{{ empleado_for.id }}/">{{ empleado_for.apellido_empleado }}, {{ empleado_for.nombre_empleado }}</a></td>
+          <td>{{ empleado_for.salario_base }}</td>
+          <td>{{ empleado_for.bonifica1|floatformat:2 }}</td>
+          <td>{{ empleado_for.asigna1|floatformat:2 }}</td>
+          <td>{{ empleado_for.base_imponible1|floatformat:2 }}</td>
+          <td>{{ empleado_for.pago_afap1|floatformat:2 }}</td>
+          <td>{{ empleado_for.pago_fonasa1|floatformat:2 }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+    <div class="container">
+        <h3 color="green">Regístrese para ver y descargar sus registros históricos</h3>
+    </div>
+{% endif %}
+
+
 {% endblock %}
