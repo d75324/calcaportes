@@ -3,7 +3,8 @@ from .models import CalculoAportes
 from .forms import RegistroEmpleado
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from django.http import HttpResponse
+import csv
 
 def home(request):
     context = {}
@@ -26,7 +27,7 @@ def empleado(request, id):
 
 def historico(request):
     context = {}
-    empleados = CalculoAportes.objects.all()
+    empleados = CalculoAportes.objects.all().order_by('-created_at')
     context['empleados'] = empleados
     return render(request, 'historico.html', context)
 
@@ -48,10 +49,36 @@ def registro(request):
     else:
         return render(request, 'registro.html')
 
-def login_user():
-    pass
 
 def logout_user(request):
     logout(request)
     messages.success(request, 'Salida Exitosa')
     return redirect('registro')
+
+def exportar_a_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="aportes.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Nombre y Apellido',
+                    'Salario Base',
+                    'Bonificación',
+                    'Asignación',
+                    'Base Imponible',
+                    'Pago AFAP',
+                    'Pago Fonasa'])  # Encabezados de columna
+
+    # Traigo los datos del modelo y los itero
+    datos = CalculoAportes.objects.all()
+
+    for dato_for in datos:
+        nombre_completo = f"{dato_for.nombre_empleado} {dato_for.apellido_empleado}"
+        writer.writerow([nombre_completo,
+                        round(dato_for.salario_base, 2),
+                        round(dato_for.bonifica1(), 2),
+                        round(dato_for.asigna1(), 2),
+                        round(dato_for.base_imponible1(), 2),
+                        round(dato_for.pago_afap1(), 2),
+                        round(dato_for.pago_fonasa1(), 2)])  # Datos que van a ir en cada fila
+
+    return response

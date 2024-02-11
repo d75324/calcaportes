@@ -7,7 +7,7 @@ En función de ese dato, le corresponde una bonificación de <strong>{{ empleado
 En concepto de Asingación Familiar, le corresponde <strong>{{ empleado.asigna1 }}</strong> pesos. <br>
 En base a lo anterior, la base imponible corresponde a <strong>{{ empleado.base_imponible1 }}</strong> pesos. <br>
 <hr>
-Deberá aportar a FONASA: <strong>{{ empleado.pago_fonasa1 }}</strong> pesos. <br>
+Deberá aportar a <a href="https://www.bps.gub.uy/10310/fondo-nacional-de-salud-fonasa.html"><strong>FONASA</strong></a>: <strong>{{ empleado.pago_fonasa1 }}</strong> pesos. <br>
 Mientras que el aporte a AFAP es: <strong>{{ empleado.pago_afap1 }}</strong> pesos. <br>
 <hr>
 <a href="{% url 'home' %}" class="btn btn-outline-primary">Calcular Aportes para Otro Empleado</a>

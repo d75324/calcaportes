@@ -14,7 +14,7 @@
             </li>          
           {% else %}
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'registro' %}">Registrarse</a>
+              <a class="nav-link" href="{% url 'registro' %}">Registrarse</a>
             </li>
           {% endif %}
 
@@ -22,8 +22,9 @@
             <a class="nav-link" href="{% url 'historico' %}">Histórico</a>
           </li>
 
-
-
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'historico' %}">Ingresar</a>
+          </li>
         </ul>
       </div>
     </div>

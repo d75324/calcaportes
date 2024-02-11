@@ -79,6 +79,6 @@ class CalculoAportes(models.Model):
 # bonifica
 # asigna
 # base_imponible
-# pago_fonasa
 # pago_afp
+# pago_fonasa
 # '''
