@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div class="container"><h4>Registrese aquí</h4> 
-<p>para poder acceder a sus registros históricos</p>
+<div class="container"><h4>Ingrese</h4> 
+<p>si ya tiene un Usuario creado, para poder acceder a sus registros históricos</p>
 </div>
 
 <div class="col-md-6 offset-md-3">
-    <h1>Formulario de Registro</h1>
+    <h1>Ingreso</h1>
     <form method="post" action="{% url 'registro' %}"> 
         {% csrf_token %}
 
