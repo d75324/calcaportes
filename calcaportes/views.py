@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import CalculoAportes
-from .forms import RegistroEmpleado
+from .forms import RegistroEmpleado, FormularioRegistroUsuarios
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponse
@@ -80,5 +80,20 @@ def exportar_a_csv(request):
                         round(dato_for.base_imponible1(), 2),
                         round(dato_for.pago_afap1(), 2),
                         round(dato_for.pago_fonasa1(), 2)])  # Datos que van a ir en cada fila
-
     return response
+
+def register_user(request):
+    if request.method == "POST":
+        form = FormularioRegistroUsuarios(request.POST)
+        if form.is_valid():
+            form.save() # guardo el nombre del nuevo usuario
+            # y limpio el formulario
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password) # le digo a django que el usuario esta autenticado
+            login(request, user)
+            messages.success(request, "Se ha registrado correctamente. Gracias por visitarnos!")
+            return redirect('home')
+    else:
+        form = FormularioRegistroUsuarios()
+        return render(request, 'registrar_usuario.html', {'form': form})

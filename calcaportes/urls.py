@@ -8,5 +8,6 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('empleado/<int:id>/', views.empleado, name='empleado'),
     path('exportar_csv/', views.exportar_a_csv, name='exportar'),
+    path('register/', views.register_user, name='register'),
     #path('logout/', views.logout_user, name='logout'),
 ]
