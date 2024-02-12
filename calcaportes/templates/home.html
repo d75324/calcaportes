@@ -4,7 +4,7 @@
 
 {% load crispy_forms_tags %}
 
-<div class="container"><h2>Home</h2>
+<div class="container"><h2>Bienvenidx {{ user.username }} !! </h2> <br>
 
     {% if user.is_authenticated %}
 
@@ -14,7 +14,7 @@
             </div>
         {% endif %}
 
-        <h1>Ingrese la información de los empleados</h1>
+        <h3>Ingrese la información de los empleados</h3>
 
         <form action="" method="POST">
             {% csrf_token %}
