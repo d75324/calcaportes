@@ -72,13 +72,3 @@ class CalculoAportes(models.Model):
         b = self.asigna1()
         base_impo = self.salario_base + a + b
         return base_impo
-
-
-# '''
-## ESTAS SON LAS COSAS QUE TENGO QUE CALCULAR ##
-# bonifica
-# asigna
-# base_imponible
-# pago_afp
-# pago_fonasa
-# '''

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container"><h2>Registro de calculos historicos para { user_name }</h2></div>
+<div class="container"><h2>Registro de calculos historicos para {{ user.username }}</h2></div>
 
 <div class="container">
   <h3>Método de Cálculo de los Valores</h3>
@@ -47,6 +47,7 @@
     </tbody>
   </table>
 </div>
+
 
 {% else %}
     <div class="container">

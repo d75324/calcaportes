@@ -17,13 +17,13 @@ class RegistroEmpleado(forms.ModelForm):
         ]
 
 class FormularioRegistroUsuarios(UserCreationForm):
-    email_usuario = forms.EmailField(label="Correo Electronico Registro", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Un correo que revise regularmente'}))
+    email = forms.EmailField(label="Correo Electronico Registro", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Un correo que revise regularmente'}))
     #nombre_usuario = forms.CharField(label="Nombre Usuario Registro", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Un nombre de Usuario, puede ser su nombre de pila'}))
 
     class Meta:
         model = User
         #fields = "__all__"
-        fields = ('username', 'email_usuario', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2')
     
         # FROM flatplanet
     def __init__(self, *args, **kwargs):

@@ -53,7 +53,7 @@ def registro(request):
 def logout_user(request):
     logout(request)
     messages.success(request, 'Salida Exitosa')
-    return redirect('registro')
+    return render(request, 'logout.html')
 
 def exportar_a_csv(request):
     response = HttpResponse(content_type='text/csv')
