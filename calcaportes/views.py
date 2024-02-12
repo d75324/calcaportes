@@ -92,7 +92,7 @@ def register_user(request):
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password) # le digo a django que el usuario esta autenticado
             login(request, user)
-            messages.success(request, "Se ha registrado correctamente. Gracias por visitarnos!")
+            messages.success(request, "Se ha registrado correctamente!")
             return redirect('home')
     else:
         form = FormularioRegistroUsuarios()

@@ -4,7 +4,9 @@
 
 {% load crispy_forms_tags %}
 
-<div class="container"><h2>Bienvenidx {{ user.username }} !! </h2> <br>
+<div class="container"><h2>Hola {{ user.username }}</h2>
+    <p>Te voy a ayudar a calcular los aportes.</p>
+    <br>
 
     {% if user.is_authenticated %}
 
@@ -27,11 +29,8 @@
             {{ form|crispy }}
 
             <br>
-
             <button type="submit" class="btn btn-primary">
-                Guardar e ingresar otro empleado</button>
-            <button type="submit" class="btn btn-primary">
-                Registrese para Calcular Pagos</button>
+                Calcular Aportes</button>
 
         </form>
         <br>
@@ -76,7 +75,7 @@
     
     {% else %}
     <div class="container">
-        <h3 style="color: red;">Regístrese para calcular los aportes a AFAP y a FONASA y descargar sus registros históricos</h3>
+        <h3 style="color: brown;">Ingresa con tu cuenta o regístrate para calcular la base imponible, aportes a AFAP y a FONASA de tus empleados o descargar los registros históricos de tus calculos.</h3>
     </div>
     {% endif %}
 
