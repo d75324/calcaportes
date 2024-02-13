@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from datetime import datetime, timedelta
 
 # Create your models here.
 
@@ -29,13 +30,32 @@ class CalculoAportes(models.Model):
     salario_base = models.IntegerField()
     afap = models.CharField(max_length=7, choices=AFAPUY_CHOICES)
     fecha_ingreso = models.DateTimeField()
+    diferencia_en_meses = models.IntegerField(blank=True, null=True)
     cantidad_de_hijos = models.IntegerField()
 
     class Meta:
         app_label = 'calcaportes'
 
     def __str__(self):
-        return (f'{self.nombre_empleado}')
+        return (f'{self.nombre_empleado} {self.apellido_empleado}')
+    
+    def save(self, *args, **kwargs):
+        self.diferencia_en_meses = calcular_antiguedad_en_meses(self.fecha_ingreso)
+        super().save(*args, **kwargs)
+
+    def calcular_antiguedad_en_meses(fecha_ingreso):
+        """
+        Esta funcion calcula la diferencia en meses entre la fecha de ingreso y la fecha actual.
+        Argumentos:
+            fecha_ingreso: es la fecha de ingreso del empleado y lo recibe como paramtro.
+        Retorno:
+            angiguedad_en_meses: la diferencia en meses entre las dos fechas.
+        """
+        fecha_actual = datetime.now()
+        diferencia_en_dias = (fecha_actual - fecha_ingreso).days
+        antiguedad_en_meses = diferencia_en_dias // 30
+        antiguedad_en_meses = None
+        return antiguedad_en_meses
 
     def calcular_aportes(self):
         bonifica = self.bonifica1()
@@ -50,6 +70,7 @@ class CalculoAportes(models.Model):
         # uso acá 15 meses como ejemplo pero ## LO TENGO QUE CALCULAR ##
         # Una bonificación del 1% del sueldo base, por cada mes trabajado
         cantidad_meses_trabajados = 15
+        #cantidad_meses_trabajados = calcular_antiguedad_en_meses()
         uno_porciento_del_salario_base = (self.salario_base)/100
         calculo_bonificacion = cantidad_meses_trabajados * uno_porciento_del_salario_base
         return calculo_bonificacion
